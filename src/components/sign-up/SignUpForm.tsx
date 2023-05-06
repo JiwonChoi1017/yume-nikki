@@ -42,7 +42,8 @@ const SignUpForm = () => {
     }
   };
   // キャンセルイベント
-  const onCancelHandler = () => {
+  const onCancelHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     // ログイン画面に戻る
     router.push("/sign-in");
   };

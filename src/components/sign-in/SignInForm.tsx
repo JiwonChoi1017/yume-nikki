@@ -42,7 +42,10 @@ const SignInForm = () => {
     }
   };
   // ユーザー登録ボタンクリックイベントハンドラ
-  const onClickSignUpButtonHandler = () => {
+  const onClickSignUpButtonHandler = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
     // ユーザー登録画面に遷移
     router.push("/sign-up");
   };
