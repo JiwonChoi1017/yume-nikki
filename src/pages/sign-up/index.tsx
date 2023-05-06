@@ -1,8 +1,16 @@
+import MainLayout from "@/components/layout/MainLayout";
+import SignUpForm from "@/components/sign-up/SignUpForm";
+
+/**
+ * ユーザ登録画面.
+ *
+ * @returns {JSX.Element} ユーザ登録画面.
+ */
 const SignUpPage = () => {
   return (
-    <div>
-      <h1>Sign Up Page</h1>
-    </div>
+    <MainLayout>
+      <SignUpForm />
+    </MainLayout>
   );
 };
 

@@ -1,8 +1,16 @@
+import MainLayout from "@/components/layout/MainLayout";
+import SignInForm from "@/components/sign-in/SignInForm";
+
+/**
+ * ログイン画面.
+ *
+ * @returns {JSX.Element} ログイン画面.
+ */
 const SignInPage = () => {
   return (
-    <div>
-      <h1>Sign In Page</h1>
-    </div>
+    <MainLayout>
+      <SignInForm />
+    </MainLayout>
   );
 };
 
