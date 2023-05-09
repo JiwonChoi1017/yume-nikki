@@ -25,6 +25,7 @@
     "next": "13.3.0",
     "r3f-perf": "^7.1.2",
     "react": "18.2.0",
+    "react-datepicker": "^4.11.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "three": "^0.151.3",
@@ -32,6 +33,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/react-datepicker": "^4.11.2",
     "@types/three": "^0.150.1",
     "@types/uuid": "^9.0.1"
   }
