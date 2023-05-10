@@ -3,9 +3,9 @@ export type Diary = {
   /** 日付. */
   date: Date;
   /** 年. */
-  year: number;
+  year: string;
   /** 月. */
-  month: number;
+  month: string;
   /** タイトル. */
   title: string;
   /** 内容. */

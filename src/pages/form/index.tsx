@@ -1,8 +1,10 @@
 import { AuthContext } from "@/contexts/AuthContext";
 import { Diary } from "@/types/Diary";
 import DiaryForm from "@/components/form/DiaryForm";
+import { DiaryHelper } from "@/helpers/diary-helper";
 import MainLayout from "@/components/layout/MainLayout";
 import { useContext } from "react";
+import { useRouter } from "next/router";
 
 /**
  * フォーム画面.
@@ -12,6 +14,10 @@ import { useContext } from "react";
 const FormPage = () => {
   // 現在のユーザーid
   const { currentUserId } = useContext(AuthContext);
+  // ルーター
+  const router = useRouter();
+  // 日記関連ヘルパー
+  const diaryHelper = new DiaryHelper();
 
   // 日記追加イベントハンドラ
   const addDiaryHandler = async (diary: Omit<Diary, "modifiedAt">) => {
@@ -19,7 +25,13 @@ const FormPage = () => {
     if (!currentUserId) {
       return;
     }
-    console.log(diary);
+
+    await diaryHelper
+      .addDiary(currentUserId, diary)
+      .then(() => {
+        router.push("/calendar");
+      })
+      .catch();
   };
 
   return (

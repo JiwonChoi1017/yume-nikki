@@ -1,8 +1,8 @@
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useEffect, useRef, useState } from "react";
+import { AddIcon, DeleteIcon } from "../ui/Icon";
+import React, { useEffect, useRef, useState } from "react";
 
-import { AddIcon } from "../ui/Icon";
 import { Button } from "../ui/Button";
 import DatePicker from "react-datepicker";
 import { Diary } from "@/types/Diary";
@@ -23,7 +23,7 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
   // 選択された日付
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   // タグリスト
-  const [tagList, setTagList] = useState<string[]>([""]);
+  const [tagList, setTagList] = useState<string[]>([]);
   // 活性/非活性状態
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   // 各入力項目のref
@@ -55,8 +55,8 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
 
     addDiaryHandler({
       date: selectedDate,
-      year,
-      month,
+      year: year.toString(),
+      month: month.toString(),
       title: titleRef.current.value,
       content: contentRef.current.value,
       tagList: filteredTagList,
@@ -78,24 +78,62 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
 
     setIsDisabled(!title || !content);
   };
+  // タグ変更イベントハンドラ
+  const onChangeTagHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const filteredTagList = tagRef.current.reduce(
+      (acc: string[], tag, tagIndex) => {
+        if (tagIndex === index) {
+          return [...acc, e.target.value];
+        }
+        return [...acc, tag.value];
+      },
+      []
+    );
+    setTagList(filteredTagList);
+  };
+
   // タグ追加アイコンのクリックイベントハンドラ
   const onClickAddTagIconHandler = () => {
     setTagList((prevState) => {
       return [...prevState, ""];
     });
   };
+  // タグ削除アイコンのクリックイベントハンドラ
+  const onClickDeleteTagIconHandler = (index: number) => {
+    const filteredTagList = tagRef.current.reduce(
+      (acc: string[], tag, tagIndex) => {
+        if (tagIndex === index) {
+          return acc;
+        }
+        return [...acc, tag.value];
+      },
+      []
+    );
+    setTagList(filteredTagList);
+  };
   // タグ入力要素
   const tagInputElement = tagList.map((tag, index) => {
     return (
-      <input
-        key={index}
-        ref={(el) => {
-          if (!el) {
-            return;
-          }
-          tagRef.current[index] = el;
-        }}
-      />
+      <div key={index}>
+        <input
+          ref={(el) => {
+            if (!el) {
+              return;
+            }
+            tagRef.current[index] = el;
+          }}
+          type="text"
+          maxLength={50}
+          value={tag}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onChangeTagHandler(e, index);
+          }}
+        />
+        <DeleteIcon onClickHandler={() => onClickDeleteTagIconHandler(index)} />
+      </div>
     );
   });
 
