@@ -13,3 +13,6 @@ export const ERROR_KIND = {
   /** 該当日記が存在しない. */
   NOT_FOUND_DIARY: "not_found_diary",
 } as const;
+
+/** 詳細のクエリ数. */
+export const DETAIL_QUERY_COUNT = 3 as const;
