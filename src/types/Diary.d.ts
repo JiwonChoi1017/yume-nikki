@@ -1,5 +1,7 @@
 /** 日記. */
 export type Diary = {
+  /** id. */
+  id: string;
   /** 日付. */
   date: Date;
   /** 年. */

@@ -20,7 +20,7 @@ const FormPage = () => {
   const diaryHelper = new DiaryHelper();
 
   // 日記追加イベントハンドラ
-  const addDiaryHandler = async (diary: Omit<Diary, "modifiedAt">) => {
+  const addDiaryHandler = async (diary: Omit<Diary, "id" | "modifiedAt">) => {
     // 現在のユーザーidが存在しない場合、早期リターン
     if (!currentUserId) {
       return;

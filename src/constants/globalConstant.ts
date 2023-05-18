@@ -14,5 +14,7 @@ export const ERROR_KIND = {
   NOT_FOUND_DIARY: "not_found_diary",
 } as const;
 
+/** 一覧のクエリ数. */
+export const LIST_QUERY_COUNT = 2 as const;
 /** 詳細のクエリ数. */
 export const DETAIL_QUERY_COUNT = 3 as const;

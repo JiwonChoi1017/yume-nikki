@@ -1,17 +1,25 @@
-import Calendar from "@/components/calendar/Calendar";
-import MainLayout from "@/components/layout/MainLayout";
+import { GetServerSideProps } from "next";
 
 /**
- * カレンダー画面.
+ * カレンダーデフォルト画面.
  *
- * @returns {JSX.Element} カレンダー画面.
+ * @returns {JSX.Element} カレンダーデフォルト画面.
  */
-const CalendarPage = () => {
-  return (
-    <MainLayout>
-      <Calendar />
-    </MainLayout>
-  );
-};
+const CalendarDefaultPage = () => {};
 
-export default CalendarPage;
+export default CalendarDefaultPage;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  // 現在の年月を取得
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+
+  return {
+    redirect: {
+      // 301: 永続的なリダイレクトに使用
+      statusCode: 301,
+      destination: `/calendar/${year}/${month}`,
+    },
+  };
+};
