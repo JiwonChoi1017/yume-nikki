@@ -10,7 +10,7 @@ import { Diary } from "@/types/Diary";
 /** Props. */
 interface Props {
   /** 日記追加イベントハンドラ. */
-  addDiaryHandler: (diary: Omit<Diary, "modifiedAt">) => void;
+  addDiaryHandler: (diary: Omit<Diary, "id" | "modifiedAt">) => void;
 }
 
 /**

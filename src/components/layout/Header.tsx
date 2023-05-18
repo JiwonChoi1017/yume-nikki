@@ -11,6 +11,10 @@ import { useRouter } from "next/router";
  * @returns {JSX.Element} ヘッダー.
  */
 const Header = () => {
+  // 現在の年月を取得
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
   // ログイン中か
   const [isSignIn, setIsSignIn] = useState<boolean>(false);
   // ログアウトイベントハンドラ、現在のユーザー
@@ -43,7 +47,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link href="/calendar">
+            <Link href={`/calendar/${year}/${month}`}>
               <FaCalendarAlt />
             </Link>
           </li>

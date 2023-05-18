@@ -22,6 +22,7 @@ const DetailPage = () => {
   const { query } = router.query;
   // 日記情報
   const [diaryInfo, setDiaryInfo] = useState<Diary>({
+    id: "",
     date: new Date(),
     year: "",
     month: "",
