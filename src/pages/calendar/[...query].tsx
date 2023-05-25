@@ -89,7 +89,15 @@ const CalendarPage = () => {
     setIsLoading(false);
   }, [query, currentUserId, yearMonth.year, yearMonth.month]);
 
-  // 前へクリックイベントハンドラ
+  // 「今日」クリックイベントハンドラ
+  const clickTodayHandler = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    // 先月のカレンダーへ遷移
+    router.push(`/calendar/${year}/${month}`);
+  };
+  // 「前へ」クリックイベントハンドラ
   const clickPrevHandler = () => {
     const { year, month } = yearMonth;
     const newYear = +month <= 1 ? (+year - 1).toString() : year;
@@ -97,7 +105,7 @@ const CalendarPage = () => {
     // 先月のカレンダーへ遷移
     router.push(`/calendar/${newYear}/${newMonth}`);
   };
-  // 次へクリックイベントハンドラ
+  // 「次へ」クリックイベントハンドラ
   const clickNextHandler = () => {
     const { year, month } = yearMonth;
     const newYear = +month >= 12 ? (+year + 1).toString() : year;
@@ -114,10 +122,11 @@ const CalendarPage = () => {
 
   return (
     <MainLayout>
-      <div className="fontSize14">
+      <div className="justifyContent">
         <Calendar
           yearMonth={yearMonth}
           diaryList={diaryList}
+          clickTodayHandler={clickTodayHandler}
           clickPrevHandler={clickPrevHandler}
           clickNextHandler={clickNextHandler}
           onClickDateHandler={onClickDateHandler}

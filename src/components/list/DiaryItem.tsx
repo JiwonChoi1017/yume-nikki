@@ -1,5 +1,6 @@
 import { Diary } from "@/types/Diary";
 import Link from "next/link";
+import classes from "@/styles/DiaryItem.module.css";
 
 /** Props. */
 interface Props {
@@ -14,25 +15,26 @@ interface Props {
  * @returns {JSX.Element} 日記.
  */
 const DiaryItem = ({ diary }: Props) => {
-  const {
-    id,
-    date,
-    year,
-    month,
-    title,
-    content,
-    tagList,
-    createdAt,
-    modifiedAt,
-  } = diary;
+  const { id, date, year, month, title, tagList } = diary;
+  // タグ要素
+  const tagElement = tagList.length > 0 && (
+    <div className={classes.tagWrap}>
+      {tagList.map((tag, idx) => (
+        <span key={idx} className={classes.tag}>
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
 
   return (
-    <Link href={`/detail/${year}/${month}/${id}`}>
-      <li>
-        <p>{title}</p>
-        <p>{content}</p>
-      </li>
-    </Link>
+    <li className={classes.diaryItem}>
+      <Link href={`/detail/${year}/${month}/${id}`}>
+        <h5 className={classes.date}>{date.toLocaleDateString()}</h5>
+        <p className={classes.title}>{title}</p>
+        {tagElement}
+      </Link>
+    </li>
   );
 };
 

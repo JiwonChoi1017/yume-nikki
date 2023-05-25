@@ -14,9 +14,11 @@ interface Props {
   yearMonth: YearMonth;
   /** 日記リスト. */
   diaryList: Diary[];
-  /** 前へクリックイベントハンドラ. */
+  /** 「今日」クリックイベントハンドラ. */
+  clickTodayHandler: () => void;
+  /** 「前へ」クリックイベントハンドラ. */
   clickPrevHandler: () => void;
-  /** 次へクリックイベントハンドラ. */
+  /** 「次へ」クリックイベントハンドラ. */
   clickNextHandler: () => void;
   /** 日付クリックイベントハンドラ. */
   onClickDateHandler: (arg: EventClickArg) => void;
@@ -31,6 +33,7 @@ interface Props {
 const Calendar = ({
   yearMonth,
   diaryList,
+  clickTodayHandler,
   clickPrevHandler,
   clickNextHandler,
   onClickDateHandler,
@@ -44,13 +47,19 @@ const Calendar = ({
     api?.gotoDate(Date.parse(`${year}-${month}-01`));
   }, [yearMonth]);
 
-  // 前へクリックイベントハンドラ
+  // 「今日」クリックイベントハンドラ
+  const onClickTodayHandler = () => {
+    const api = calendarRef.current?.getApi();
+    api?.today();
+    clickTodayHandler();
+  };
+  // 「前へ」クリックイベントハンドラ
   const onClickPrevHandler = () => {
     const api = calendarRef.current?.getApi();
     api?.prev();
     clickPrevHandler();
   };
-  // 次へクリックイベントハンドラ
+  // 「次へ」クリックイベントハンドラ
   const onClickNextHandler = () => {
     const api = calendarRef.current?.getApi();
     api?.next();
@@ -64,12 +73,17 @@ const Calendar = ({
         plugins={[dayGridPlugin]}
         locales={allLocales}
         locale="ja"
+        displayEventTime={false}
         headerToolbar={{
-          left: "customPrev",
-          center: "title",
-          right: "customNext",
+          left: "title",
+          center: "",
+          right: "customToday customPrev customNext",
         }}
         customButtons={{
+          customToday: {
+            text: "今日",
+            click: onClickTodayHandler,
+          },
           customPrev: {
             icon: "chevron-left",
             click: onClickPrevHandler,
