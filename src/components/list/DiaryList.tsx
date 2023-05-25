@@ -1,5 +1,6 @@
 import { Diary } from "@/types/Diary";
 import DiaryItem from "./DiaryItem";
+import classes from "@/styles/DiaryList.module.css";
 
 /** Props. */
 interface Props {
@@ -19,7 +20,7 @@ const DiaryList = ({ isLoading, diaryList }: Props) => {
   const diaryListElement = isLoading ? (
     <></>
   ) : (
-    <ul>
+    <ul className={classes.diaryList}>
       {diaryList.map((diary) => {
         return <DiaryItem key={diary.id} diary={diary} />;
       })}
