@@ -1,17 +1,27 @@
 import "react-datepicker/dist/react-datepicker.css";
 
 import { AddIcon, DeleteIcon } from "../ui/Icon";
+import DatePicker, { registerLocale } from "react-datepicker";
 import React, { useEffect, useRef, useState } from "react";
 
 import { Button } from "../ui/Button";
-import DatePicker from "react-datepicker";
 import { Diary } from "@/types/Diary";
+import ja from "date-fns/locale/ja";
 
 /** Props. */
 interface Props {
+  /** 修正フォームか. */
+  isModifyForm: boolean;
+  /** 日記情報. */
+  diaryInfo: Diary;
   /** 日記追加イベントハンドラ. */
   addDiaryHandler: (diary: Omit<Diary, "id" | "modifiedAt">) => void;
+  /** キャンセルボタンの表示状態. */
+  showCancelButton: boolean;
 }
+
+// カレンダーを日本語化するための変数を定義
+registerLocale("ja", ja);
 
 /**
  * 日記フォーム.
@@ -19,9 +29,18 @@ interface Props {
  * @param {Props} Props
  * @returns {JSX.Element} 日記フォーム.
  */
-const DiaryForm = ({ addDiaryHandler }: Props) => {
+const DiaryForm = ({
+  isModifyForm,
+  diaryInfo,
+  addDiaryHandler,
+  showCancelButton,
+}: Props) => {
   // 選択された日付
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  // タイトル
+  const [title, setTitle] = useState<string>("");
+  // 内容
+  const [content, setContent] = useState<string>("");
   // タグリスト
   const [tagList, setTagList] = useState<string[]>([]);
   // 活性/非活性状態
@@ -32,8 +51,17 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
   const tagRef = useRef<HTMLInputElement[]>([]);
 
   useEffect(() => {
+    const { date, title, content, tagList } = diaryInfo;
+
+    // 各状態を更新
+    setSelectedDate(date);
+    setTitle(title);
+    setContent(content);
     tagRef.current = tagRef.current.slice(0, tagList.length);
-  }, [tagList.length]);
+    setTagList(tagList.length ? tagList : []);
+
+    setIsDisabled(!date || !title || !content);
+  }, [diaryInfo, tagList.length]);
 
   // 送信イベントハンドラ
   const onSubmitHandler = (e: React.FormEvent) => {
@@ -52,6 +80,16 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
       }
       return [...acc, tag.value];
     }, []);
+
+    if (isModifyForm) {
+      console.log(
+        selectedDate,
+        titleRef.current.value,
+        contentRef.current.value,
+        filteredTagList
+      );
+      return;
+    }
 
     addDiaryHandler({
       date: selectedDate,
@@ -141,7 +179,12 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
     <form onSubmit={onSubmitHandler}>
       <div>
         <label htmlFor="date">日付</label>
-        <DatePicker selected={selectedDate} onChange={onChangeDateHandler} />
+        <DatePicker
+          dateFormat="yyyy/MM/dd"
+          locale="ja"
+          selected={selectedDate}
+          onChange={onChangeDateHandler}
+        />
       </div>
       <div>
         <label htmlFor="title">タイトル</label>
@@ -151,6 +194,7 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
           id="title"
           name="title"
           maxLength={150}
+          defaultValue={title}
           onChange={onChangeInputHandler}
         />
       </div>
@@ -162,6 +206,7 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
           name="content"
           rows={20}
           maxLength={3000}
+          defaultValue={content}
           onChange={onChangeInputHandler}
         />
       </div>
@@ -170,7 +215,11 @@ const DiaryForm = ({ addDiaryHandler }: Props) => {
         {tagInputElement}
         <AddIcon onClickHandler={onClickAddTagIconHandler} />
       </div>
-      <Button text="日記を追加" isSubmit={true} isDisabled={isDisabled} />
+      <Button
+        text={isModifyForm ? "修正" : "日記を追加"}
+        isSubmit={true}
+        isDisabled={isDisabled}
+      />
     </form>
   );
 };

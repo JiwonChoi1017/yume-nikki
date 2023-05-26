@@ -117,7 +117,7 @@ const CalendarPage = () => {
   const onClickDateHandler = (arg: EventClickArg) => {
     const { publicId } = arg.event._def;
     // 詳細画面へ遷移する
-    router.push(`/detail/${yearMonth.year}/${yearMonth.month}/${publicId}`);
+    router.push(`/detail?id=${publicId}`);
   };
 
   return (

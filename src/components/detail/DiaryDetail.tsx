@@ -1,4 +1,5 @@
 import { Diary } from "@/types/Diary";
+import Link from "next/link";
 
 /** Props. */
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
  * @returns {JSX.Element} 日記詳細.
  */
 const DiaryDetail = ({ diaryInfo }: Props) => {
-  const { title, content, tagList } = diaryInfo;
+  const { id, title, content, tagList } = diaryInfo;
   // タグ要素
   const tagElement = (
     <div>
@@ -28,6 +29,8 @@ const DiaryDetail = ({ diaryInfo }: Props) => {
       <h2>{title}</h2>
       <p>{content}</p>
       {tagElement}
+      <Link href={`/form/?id=${id}`}>修正</Link>
+      <p>削除</p>
     </div>
   );
 };

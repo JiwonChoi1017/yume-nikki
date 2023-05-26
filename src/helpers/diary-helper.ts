@@ -1,5 +1,6 @@
 import {
   DocumentData,
+  DocumentSnapshot,
   QuerySnapshot,
   addDoc,
   collection,
@@ -7,6 +8,7 @@ import {
   getDoc,
   getDocs,
   query,
+  where,
 } from "firebase/firestore";
 
 import { Diary } from "@/types/Diary";
@@ -32,7 +34,9 @@ export class DiaryHelper {
     const month = diaryQuery?.[1] ?? now.getMonth().toString();
 
     const fetchAllQuery = query(
-      collection(db, currentUserId, year.toString(), month.toString())
+      collection(db, currentUserId),
+      where("year", "==", year.toString()),
+      where("month", "==", month.toString())
     );
     return await getDocs(fetchAllQuery);
   }
@@ -41,21 +45,15 @@ export class DiaryHelper {
    * 日記を取得.
    *
    * @param {string} currentUserId - 現在のユーザーid
-   * @param {string[]} query - クエリ
-   * @returns {Promise<DocumentData | undefined>} 日記データ.
+   * @param {string} id - id
+   * @returns {Promise<DocumentSnapshot<DocumentData>>} 日記データ.
    */
   async fetchDiary(
     currentUserId: string,
-    query: string[]
-  ): Promise<DocumentData | undefined> {
-    const year = query[0];
-    const month = query[1];
-    const diaryId = query[2];
-
-    const diaryRef = doc(db, currentUserId, year, month, diaryId);
-    const diarySnapshot = await getDoc(diaryRef);
-
-    return diarySnapshot.data();
+    id: string
+  ): Promise<DocumentSnapshot<DocumentData>> {
+    const diaryRef = doc(db, currentUserId, id);
+    return await getDoc(diaryRef);
   }
 
   /**
@@ -70,8 +68,10 @@ export class DiaryHelper {
   ) {
     const { date, year, month, title, content, tagList, createdAt } = diary;
 
-    return await addDoc(collection(db, currentUserId, year, month), {
+    return await addDoc(collection(db, currentUserId), {
       date,
+      year,
+      month,
       title,
       content,
       tagList,
