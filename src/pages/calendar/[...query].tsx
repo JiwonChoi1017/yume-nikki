@@ -63,9 +63,9 @@ const CalendarPage = () => {
             data,
             "createdAt"
           );
-          const modifiedAt = dateHelper.convertTimestampToDate(
+          const updatedAt = dateHelper.convertTimestampToDate(
             data,
-            "modifiedAt"
+            "updatedAt"
           );
 
           tempDiaryList.push({
@@ -77,7 +77,7 @@ const CalendarPage = () => {
             content,
             tagList,
             createdAt: createdAt ?? new Date(),
-            modifiedAt: modifiedAt ?? new Date(),
+            updatedAt: updatedAt ?? new Date(),
           });
         });
         setDiaryList(tempDiaryList);
@@ -117,7 +117,7 @@ const CalendarPage = () => {
   const onClickDateHandler = (arg: EventClickArg) => {
     const { publicId } = arg.event._def;
     // 詳細画面へ遷移する
-    router.push(`/detail/${yearMonth.year}/${yearMonth.month}/${publicId}`);
+    router.push(`/detail?id=${publicId}`);
   };
 
   return (

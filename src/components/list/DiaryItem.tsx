@@ -15,7 +15,7 @@ interface Props {
  * @returns {JSX.Element} 日記.
  */
 const DiaryItem = ({ diary }: Props) => {
-  const { id, date, year, month, title, tagList } = diary;
+  const { id, date, title, tagList } = diary;
   // タグ要素
   const tagElement = tagList.length > 0 && (
     <div className={classes.tagWrap}>
@@ -29,7 +29,7 @@ const DiaryItem = ({ diary }: Props) => {
 
   return (
     <li className={classes.diaryItem}>
-      <Link href={`/detail/${year}/${month}/${id}`}>
+      <Link href={`/detail?id=${id}`}>
         <h5 className={classes.date}>{date.toLocaleDateString()}</h5>
         <p className={classes.title}>{title}</p>
         {tagElement}
