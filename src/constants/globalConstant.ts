@@ -16,5 +16,3 @@ export const ERROR_KIND = {
 
 /** 一覧のクエリ数. */
 export const LIST_QUERY_COUNT = 2 as const;
-/** 詳細のクエリ数. */
-export const DETAIL_QUERY_COUNT = 1 as const;

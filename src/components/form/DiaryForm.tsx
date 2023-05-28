@@ -51,6 +51,7 @@ const DiaryForm = ({
   const [tagList, setTagList] = useState<string[]>([]);
   // 活性/非活性状態
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
+
   // 各入力項目のref
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);

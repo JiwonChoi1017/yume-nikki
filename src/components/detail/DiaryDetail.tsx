@@ -5,6 +5,8 @@ import Link from "next/link";
 interface Props {
   /** 日記情報. */
   diaryInfo: Diary;
+  /** 削除ボタンクリックイベントハンドラ. */
+  onClickDeleteButtonHandler: () => void;
 }
 
 /**
@@ -13,7 +15,7 @@ interface Props {
  * @param {Props} Props
  * @returns {JSX.Element} 日記詳細.
  */
-const DiaryDetail = ({ diaryInfo }: Props) => {
+const DiaryDetail = ({ diaryInfo, onClickDeleteButtonHandler }: Props) => {
   const { id, title, content, tagList } = diaryInfo;
   // タグ要素
   const tagElement = (
@@ -30,7 +32,7 @@ const DiaryDetail = ({ diaryInfo }: Props) => {
       <p>{content}</p>
       {tagElement}
       <Link href={`/form/?id=${id}`}>修正</Link>
-      <p>削除</p>
+      <p onClick={onClickDeleteButtonHandler}>削除</p>
     </div>
   );
 };
