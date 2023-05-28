@@ -15,9 +15,13 @@ interface Props {
   /** 日記情報. */
   diaryInfo: Diary;
   /** 日記追加イベントハンドラ. */
-  addDiaryHandler: (diary: Omit<Diary, "id" | "modifiedAt">) => void;
-  /** キャンセルボタンの表示状態. */
+  addDiaryHandler: (diary: Omit<Diary, "id" | "updatedAt">) => void;
+  /** 日記更新イベントハンドラ. */
+  updateDiaryHandler: (diary: Omit<Diary, "createdAt">) => void;
+  /** キャンセルボタンを表示するか. */
   showCancelButton: boolean;
+  /** キャンセルボタンクリックイベントハンドラ. */
+  onClickCancelButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 // カレンダーを日本語化するための変数を定義
@@ -33,7 +37,9 @@ const DiaryForm = ({
   isModifyForm,
   diaryInfo,
   addDiaryHandler,
+  updateDiaryHandler,
   showCancelButton,
+  onClickCancelButtonHandler,
 }: Props) => {
   // 選択された日付
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -48,7 +54,6 @@ const DiaryForm = ({
   // 各入力項目のref
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
-  const tagRef = useRef<HTMLInputElement[]>([]);
 
   useEffect(() => {
     const { date, title, content, tagList } = diaryInfo;
@@ -57,37 +62,40 @@ const DiaryForm = ({
     setSelectedDate(date);
     setTitle(title);
     setContent(content);
-    tagRef.current = tagRef.current.slice(0, tagList.length);
     setTagList(tagList.length ? tagList : []);
 
     setIsDisabled(!date || !title || !content);
-  }, [diaryInfo, tagList.length]);
+  }, [diaryInfo]);
 
   // 送信イベントハンドラ
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!titleRef.current || !contentRef.current || !tagRef.current) {
+    if (!titleRef.current || !contentRef.current) {
       return;
     }
 
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth() + 1;
     // 空文字を除外した新しいタグの配列を生成
-    const filteredTagList = tagRef.current.reduce((acc: string[], tag) => {
-      if (!tag.value) {
+    const filteredTagList = tagList.reduce((acc: string[], tag) => {
+      if (!tag) {
         return acc;
       }
-      return [...acc, tag.value];
+      return [...acc, tag];
     }, []);
 
     if (isModifyForm) {
-      console.log(
-        selectedDate,
-        titleRef.current.value,
-        contentRef.current.value,
-        filteredTagList
-      );
+      updateDiaryHandler({
+        id: diaryInfo.id,
+        date: selectedDate,
+        year: year.toString(),
+        month: month.toString(),
+        title: titleRef.current.value,
+        content: contentRef.current.value,
+        tagList: filteredTagList,
+        updatedAt: new Date(),
+      });
       return;
     }
 
@@ -121,15 +129,12 @@ const DiaryForm = ({
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    const filteredTagList = tagRef.current.reduce(
-      (acc: string[], tag, tagIndex) => {
-        if (tagIndex === index) {
-          return [...acc, e.target.value];
-        }
-        return [...acc, tag.value];
-      },
-      []
-    );
+    const filteredTagList = tagList.reduce((acc: string[], tag, tagIndex) => {
+      if (tagIndex === index) {
+        return [...acc, e.target.value];
+      }
+      return [...acc, tag];
+    }, []);
     setTagList(filteredTagList);
   };
 
@@ -141,15 +146,12 @@ const DiaryForm = ({
   };
   // タグ削除アイコンのクリックイベントハンドラ
   const onClickDeleteTagIconHandler = (index: number) => {
-    const filteredTagList = tagRef.current.reduce(
-      (acc: string[], tag, tagIndex) => {
-        if (tagIndex === index) {
-          return acc;
-        }
-        return [...acc, tag.value];
-      },
-      []
-    );
+    const filteredTagList = tagList.reduce((acc: string[], tag, tagIndex) => {
+      if (tagIndex === index) {
+        return acc;
+      }
+      return [...acc, tag];
+    }, []);
     setTagList(filteredTagList);
   };
   // タグ入力要素
@@ -157,12 +159,6 @@ const DiaryForm = ({
     return (
       <div key={index}>
         <input
-          ref={(el) => {
-            if (!el) {
-              return;
-            }
-            tagRef.current[index] = el;
-          }}
           type="text"
           maxLength={50}
           value={tag}
@@ -215,6 +211,9 @@ const DiaryForm = ({
         {tagInputElement}
         <AddIcon onClickHandler={onClickAddTagIconHandler} />
       </div>
+      {showCancelButton && (
+        <Button text={"キャンセル"} clickHandler={onClickCancelButtonHandler} />
+      )}
       <Button
         text={isModifyForm ? "修正" : "日記を追加"}
         isSubmit={true}

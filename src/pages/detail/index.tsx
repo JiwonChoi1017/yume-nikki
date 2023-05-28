@@ -37,7 +37,7 @@ const DetailPage = ({ id }: Props) => {
     content: "",
     tagList: [],
     createdAt: new Date(),
-    modifiedAt: new Date(),
+    updatedAt: new Date(),
   });
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const DetailPage = ({ id }: Props) => {
       // 各日付のDate型への変換を行う
       const date = dateHelper.convertTimestampToDate(data, "date");
       const createdAt = dateHelper.convertTimestampToDate(data, "createdAt");
-      const modifiedAt = dateHelper.convertTimestampToDate(data, "modifiedAt");
+      const updatedAt = dateHelper.convertTimestampToDate(data, "updatedAt");
       setDiaryInfo({
         id: doc.id,
         date: date ?? new Date(),
@@ -74,7 +74,7 @@ const DetailPage = ({ id }: Props) => {
         content,
         tagList,
         createdAt: createdAt ?? new Date(),
-        modifiedAt: modifiedAt ?? new Date(),
+        updatedAt: updatedAt ?? new Date(),
       });
     });
   }, [router, id, currentUserId]);

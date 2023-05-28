@@ -17,6 +17,11 @@ interface Props {
   id?: string;
 }
 
+// 日記関連ヘルパー
+const diaryHelper = new DiaryHelper();
+// 日付関連ヘルパー
+const dateHelper = new DateHelper();
+
 /**
  * フォーム画面.
  *
@@ -38,7 +43,7 @@ const FormPage = ({ referer, id }: Props) => {
     content: "",
     tagList: [],
     createdAt: new Date(),
-    modifiedAt: new Date(),
+    updatedAt: new Date(),
   });
   // キャンセルボタンの表示状態
   const [showCancelButton, setShowCancelButton] = useState<boolean>(false);
@@ -57,11 +62,6 @@ const FormPage = ({ referer, id }: Props) => {
       return;
     }
 
-    // 日記関連ヘルパー
-    const diaryHelper = new DiaryHelper();
-    // 日付関連ヘルパー
-    const dateHelper = new DateHelper();
-
     // 日記を取得
     diaryHelper.fetchDiary(currentUserId, id).then((doc) => {
       const data = doc.data();
@@ -73,7 +73,7 @@ const FormPage = ({ referer, id }: Props) => {
       // 各日付のDate型への変換を行う
       const date = dateHelper.convertTimestampToDate(data, "date");
       const createdAt = dateHelper.convertTimestampToDate(data, "createdAt");
-      const modifiedAt = dateHelper.convertTimestampToDate(data, "modifiedAt");
+      const updatedAt = dateHelper.convertTimestampToDate(data, "updatedAt");
       setDiaryInfo({
         id: doc.id,
         date: date ?? new Date(),
@@ -83,20 +83,17 @@ const FormPage = ({ referer, id }: Props) => {
         content,
         tagList,
         createdAt: createdAt ?? new Date(),
-        modifiedAt: modifiedAt ?? new Date(),
+        updatedAt: updatedAt ?? new Date(),
       });
     });
   }, [referer, id, currentUserId]);
 
   // 日記追加イベントハンドラ
-  const addDiaryHandler = async (diary: Omit<Diary, "id" | "modifiedAt">) => {
+  const addDiaryHandler = async (diary: Omit<Diary, "id" | "updatedAt">) => {
     // 現在のユーザーidが存在しない場合、早期リターン
     if (!currentUserId) {
       return;
     }
-
-    // 日記関連ヘルパー
-    const diaryHelper = new DiaryHelper();
 
     await diaryHelper
       .addDiary(currentUserId, diary)
@@ -105,6 +102,25 @@ const FormPage = ({ referer, id }: Props) => {
       })
       .catch();
   };
+  // 日記更新イベントハンドラ.
+  const updateDiaryHandler = async (diary: Omit<Diary, "createdAt">) => {
+    // 現在のユーザーidが存在しない場合、早期リターン
+    if (!currentUserId) {
+      return;
+    }
+
+    await diaryHelper
+      .updateDiary(currentUserId, diary)
+      .then(() => {
+        router.push("/calendar");
+      })
+      .catch();
+  };
+  // 前のページへ戻る
+  const goBackPreviousPage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.back();
+  };
 
   return (
     <MainLayout>
@@ -112,7 +128,9 @@ const FormPage = ({ referer, id }: Props) => {
         isModifyForm={!!id}
         diaryInfo={diaryInfo}
         addDiaryHandler={addDiaryHandler}
+        updateDiaryHandler={updateDiaryHandler}
         showCancelButton={showCancelButton}
+        onClickCancelButtonHandler={goBackPreviousPage}
       />
     </MainLayout>
   );

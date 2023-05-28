@@ -16,6 +16,6 @@ export type Diary = {
   tagList: string[];
   /** 作成日. */
   createdAt: Date;
-  /** 修正日. */
-  modifiedAt: Date;
+  /** 更新日. */
+  updatedAt: Date;
 };

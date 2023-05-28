@@ -8,6 +8,7 @@ import {
   getDoc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -60,11 +61,11 @@ export class DiaryHelper {
    * 日記を追加.
    *
    * @param {string} currentUserId - 現在のユーザーid
-   * @param {Omit<Diary, "id" | "modifiedAt">} diary - 日記
+   * @param {Omit<Diary, "id" | "updatedAt">} diary - 日記
    */
   async addDiary(
     currentUserId: string,
-    diary: Omit<Diary, "id" | "modifiedAt">
+    diary: Omit<Diary, "id" | "updatedAt">
   ) {
     const { date, year, month, title, content, tagList, createdAt } = diary;
 
@@ -76,6 +77,27 @@ export class DiaryHelper {
       content,
       tagList,
       createdAt,
+    });
+  }
+
+  /**
+   * 日記を更新.
+   *
+   * @param {string} currentUserId - 現在のユーザーid
+   * @param {Omit<Diary, "createdAt">} diary - 日記
+   */
+  async updateDiary(currentUserId: string, diary: Omit<Diary, "createdAt">) {
+    const { id, date, year, month, title, content, tagList, updatedAt } = diary;
+    const diaryRef = doc(db, currentUserId, id);
+
+    return await updateDoc(diaryRef, {
+      date,
+      year,
+      month,
+      title,
+      content,
+      tagList,
+      updatedAt,
     });
   }
 }
