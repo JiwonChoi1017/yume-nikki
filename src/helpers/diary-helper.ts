@@ -4,6 +4,7 @@ import {
   QuerySnapshot,
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -99,5 +100,17 @@ export class DiaryHelper {
       tagList,
       updatedAt,
     });
+  }
+
+  /**
+   * 日記を削除.
+   *
+   * @param {string} currentUserId - 現在のユーザーid
+   * @param {string} id - id
+   */
+  async deleteDiary(currentUserId: string, id: string) {
+    const diaryRef = doc(db, currentUserId, id);
+
+    return await deleteDoc(diaryRef);
   }
 }

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
-import { DETAIL_QUERY_COUNT } from "@/constants/globalConstant";
 import { DateHelper } from "@/helpers/date-helper";
 import { Diary } from "@/types/Diary";
 import DiaryDetail from "@/components/detail/DiaryDetail";
@@ -15,6 +14,11 @@ interface Props {
   /** (任意)id. */
   id?: string;
 }
+
+// 日記関連ヘルパー
+const diaryHelper = new DiaryHelper();
+// 日付関連ヘルパー
+const dateHelper = new DateHelper();
 
 /**
  * 詳細画面.
@@ -41,16 +45,16 @@ const DetailPage = ({ id }: Props) => {
   });
 
   useEffect(() => {
-    // 日記id、もしくはユーザーidが存在しない場合、404にリダイレクトさせる
-    if (!id || !currentUserId) {
+    // 日記idが存在しない場合、404にリダイレクトさせる
+    if (!id) {
       router.replace("/404");
       return;
     }
 
-    // 日記関連ヘルパー
-    const diaryHelper = new DiaryHelper();
-    // 日付関連ヘルパー
-    const dateHelper = new DateHelper();
+    // ユーザーidが存在しない場合、早期リターン
+    if (!currentUserId) {
+      return;
+    }
 
     // 日記を取得
     diaryHelper.fetchDiary(currentUserId, id).then((doc) => {
@@ -79,9 +83,27 @@ const DetailPage = ({ id }: Props) => {
     });
   }, [router, id, currentUserId]);
 
+  // 日記削除イベントハンドラ
+  const deleteDiaryHandler = async () => {
+    // ユーザーidが存在しない場合、早期リターン
+    if (!currentUserId) {
+      return;
+    }
+
+    await diaryHelper
+      .deleteDiary(currentUserId, diaryInfo.id)
+      .then(() => {
+        router.push(`/calendar`);
+      })
+      .catch(() => {});
+  };
+
   return (
     <MainLayout>
-      <DiaryDetail diaryInfo={diaryInfo} />
+      <DiaryDetail
+        diaryInfo={diaryInfo}
+        onClickDeleteButtonHandler={deleteDiaryHandler}
+      />
     </MainLayout>
   );
 };

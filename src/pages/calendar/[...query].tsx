@@ -12,6 +12,11 @@ import MainLayout from "@/components/layout/MainLayout";
 import { YearMonth } from "@/types/Common";
 import { useRouter } from "next/router";
 
+// 日記関連ヘルパー
+const diaryHelper = new DiaryHelper();
+// 日付関連ヘルパー
+const dateHelper = new DateHelper();
+
 /**
  * カレンダー画面.
  *
@@ -44,11 +49,6 @@ const CalendarPage = () => {
     }
 
     setYearMonth({ year: query[0], month: query[1] });
-
-    // 日記関連ヘルパー
-    const diaryHelper = new DiaryHelper();
-    // 日付関連ヘルパー
-    const dateHelper = new DateHelper();
 
     diaryHelper
       .fetchAllDiary(currentUserId, query)
