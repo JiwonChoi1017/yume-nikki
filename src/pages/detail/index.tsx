@@ -6,7 +6,6 @@ import { Diary } from "@/types/Diary";
 import DiaryDetail from "@/components/detail/DiaryDetail";
 import { DiaryHelper } from "@/helpers/diary-helper";
 import { GetServerSideProps } from "next";
-import MainLayout from "@/components/layout/MainLayout";
 import { useRouter } from "next/router";
 
 /** Props. */
@@ -99,12 +98,10 @@ const DetailPage = ({ id }: Props) => {
   };
 
   return (
-    <MainLayout>
-      <DiaryDetail
-        diaryInfo={diaryInfo}
-        onClickDeleteButtonHandler={deleteDiaryHandler}
-      />
-    </MainLayout>
+    <DiaryDetail
+      diaryInfo={diaryInfo}
+      onClickDeleteButtonHandler={deleteDiaryHandler}
+    />
   );
 };
 
