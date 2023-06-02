@@ -96,6 +96,7 @@ const Calendar = ({
         events={{
           events: diaryList,
         }}
+        // TODO: 不具合解消
         eventClick={onClickDateHandler}
       />
     </div>

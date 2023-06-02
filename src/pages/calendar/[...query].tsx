@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
+import Book from "@/components/layout/Book";
 import Calendar from "@/components/calendar/Calendar";
 import { DateHelper } from "@/helpers/date-helper";
 import { Diary } from "@/types/Diary";
@@ -8,7 +9,6 @@ import { DiaryHelper } from "@/helpers/diary-helper";
 import DiaryList from "@/components/list/DiaryList";
 import { EventClickArg } from "@fullcalendar/core";
 import { LIST_QUERY_COUNT } from "@/constants/globalConstant";
-import MainLayout from "@/components/layout/MainLayout";
 import { YearMonth } from "@/types/Common";
 import { useRouter } from "next/router";
 
@@ -121,8 +121,9 @@ const CalendarPage = () => {
   };
 
   return (
-    <MainLayout>
-      <div className="justifyContent">
+    <Book
+      // カレンダー
+      leftPage={
         <Calendar
           yearMonth={yearMonth}
           diaryList={diaryList}
@@ -131,9 +132,10 @@ const CalendarPage = () => {
           clickNextHandler={clickNextHandler}
           onClickDateHandler={onClickDateHandler}
         />
-        <DiaryList isLoading={isLoading} diaryList={diaryList} />
-      </div>
-    </MainLayout>
+      }
+      // 日記リスト
+      rightPage={<DiaryList isLoading={isLoading} diaryList={diaryList} />}
+    />
   );
 };
 
