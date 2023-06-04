@@ -3,14 +3,15 @@ import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
 import Link from "next/link";
+import classes from "@/styles/Menu.module.css";
 import { useRouter } from "next/router";
 
 /**
- * ヘッダー.
+ * メニュー.
  *
- * @returns {JSX.Element} ヘッダー.
+ * @returns {JSX.Element} メニュー.
  */
-const Header = () => {
+const Menu = () => {
   // 現在の年月を取得
   const now = new Date();
   const year = now.getFullYear();
@@ -32,36 +33,29 @@ const Header = () => {
   };
   // ログアウトアイコンのクリックイベントハンドラ
   const onClickSignOutHandler = async () => {
-    await signOutHandler();
-    setIsSignIn(!!currentUser);
-    router.push("/");
+    // await signOutHandler();
+    // setIsSignIn(!!currentUser);
+    // router.push("/");
+    router.push("/my");
   };
 
   return (
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/form">
-              <FaPlus />
-            </Link>
-          </li>
-          <li>
-            <Link href={`/calendar/${year}/${month}`}>
-              <FaCalendarAlt />
-            </Link>
-          </li>
-          <li
-            onClick={
-              isSignIn ? onClickSignOutHandler : onClickSignInIconHandler
-            }
-          >
-            <FaUserAlt />
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <ul className={`${classes.menu} width__10per`}>
+      <li>
+        <Link href="/form">
+          <FaPlus />
+        </Link>
+      </li>
+      <li>
+        <Link href={`/calendar/${year}/${month}`}>
+          <FaCalendarAlt />
+        </Link>
+      </li>
+      <li onClick={isSignIn ? onClickSignOutHandler : onClickSignInIconHandler}>
+        <FaUserAlt />
+      </li>
+    </ul>
   );
 };
 
-export default Header;
+export default Menu;

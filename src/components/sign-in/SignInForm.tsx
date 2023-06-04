@@ -4,6 +4,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 import { Button } from "../ui/Button";
 import { ErrorInfo } from "@/types/Error";
 import { RESPONSE_STATUS } from "@/constants/globalConstant";
+import UserForm from "../layout/UserForm";
 import { useRouter } from "next/router";
 
 /**
@@ -63,11 +64,7 @@ const SignInForm = () => {
   );
 
   return (
-    <form
-      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-        onSubmitHandler(e);
-      }}
-    >
+    <UserForm title="ログイン" onSubmitHandler={onSubmitHandler}>
       {errorMsg}
       <div>
         <label htmlFor="email">メールアドレス</label>
@@ -92,7 +89,7 @@ const SignInForm = () => {
       </div>
       <Button text="ログイン" isSubmit={true} isDisabled={isDisabled} />
       <Button text="新規登録" clickHandler={onClickSignUpButtonHandler} />
-    </form>
+    </UserForm>
   );
 };
 

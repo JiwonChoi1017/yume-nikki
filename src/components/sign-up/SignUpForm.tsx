@@ -5,6 +5,7 @@ import { AuthErrorCodes } from "firebase/auth";
 import { Button } from "../ui/Button";
 import { ErrorInfo } from "@/types/Error";
 import { RESPONSE_STATUS } from "@/constants/globalConstant";
+import UserForm from "../layout/UserForm";
 import { useRouter } from "next/router";
 
 /**
@@ -77,11 +78,7 @@ const SignUpForm = () => {
   );
 
   return (
-    <form
-      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-        onSubmitHandler(e);
-      }}
-    >
+    <UserForm title="新規登録" onSubmitHandler={onSubmitHandler}>
       <div>
         <label htmlFor="email">メールアドレス</label>
         <input
@@ -111,7 +108,7 @@ const SignUpForm = () => {
       </div>
       <Button text="登録する" isSubmit={true} isDisabled={isDisabled} />
       <Button text="キャンセル" clickHandler={onCancelHandler} />
-    </form>
+    </UserForm>
   );
 };
 

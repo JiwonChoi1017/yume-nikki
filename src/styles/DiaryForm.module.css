@@ -1,0 +1,24 @@
+.diaryFormWrap {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+}
+
+.diaryForm {
+  width: 80%;
+}
+
+.diaryForm label {
+  display: block;
+}
+
+.diaryForm input {
+  width: 100%;
+}
+
+.diaryForm textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+}
