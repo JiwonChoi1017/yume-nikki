@@ -6,7 +6,6 @@ import { Diary } from "@/types/Diary";
 import DiaryForm from "@/components/form/DiaryForm";
 import { DiaryHelper } from "@/helpers/diary-helper";
 import { GetServerSideProps } from "next";
-import MainLayout from "@/components/layout/MainLayout";
 import { useRouter } from "next/router";
 
 /** Props. */
@@ -123,16 +122,14 @@ const FormPage = ({ referer, id }: Props) => {
   };
 
   return (
-    <MainLayout>
-      <DiaryForm
-        isModifyForm={!!id}
-        diaryInfo={diaryInfo}
-        addDiaryHandler={addDiaryHandler}
-        updateDiaryHandler={updateDiaryHandler}
-        showCancelButton={showCancelButton}
-        onClickCancelButtonHandler={goBackPreviousPage}
-      />
-    </MainLayout>
+    <DiaryForm
+      isModifyForm={!!id}
+      diaryInfo={diaryInfo}
+      addDiaryHandler={addDiaryHandler}
+      updateDiaryHandler={updateDiaryHandler}
+      showCancelButton={showCancelButton}
+      onClickCancelButtonHandler={goBackPreviousPage}
+    />
   );
 };
 

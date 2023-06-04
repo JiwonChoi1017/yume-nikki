@@ -27,3 +27,8 @@ ul {
   list-style-type: none;
   padding: 0;
 }
+
+.width__10per {
+  width: 10%;
+  margin: 0;
+}

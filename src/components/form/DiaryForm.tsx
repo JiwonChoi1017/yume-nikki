@@ -4,8 +4,10 @@ import { AddIcon, DeleteIcon } from "../ui/Icon";
 import DatePicker, { registerLocale } from "react-datepicker";
 import React, { useEffect, useRef, useState } from "react";
 
+import Book from "../layout/Book";
 import { Button } from "../ui/Button";
 import { Diary } from "@/types/Diary";
+import classes from "@/styles/DiaryForm.module.css";
 import ja from "date-fns/locale/ja";
 
 /** Props. */
@@ -171,55 +173,73 @@ const DiaryForm = ({
       </div>
     );
   });
+  // 左ページ要素
+  const leftPageElement = (
+    <div className={classes.diaryFormWrap}>
+      <div className={classes.diaryForm}>
+        <div>
+          <label htmlFor="date">日付</label>
+          <DatePicker
+            dateFormat="yyyy/MM/dd"
+            locale="ja"
+            selected={selectedDate}
+            onChange={onChangeDateHandler}
+          />
+        </div>
+        <div>
+          <label htmlFor="title">タイトル</label>
+          <input
+            ref={titleRef}
+            type="text"
+            id="title"
+            name="title"
+            maxLength={150}
+            defaultValue={title}
+            onChange={onChangeInputHandler}
+          />
+        </div>
+        <div>
+          <label htmlFor="tag">タグ</label>
+          {tagInputElement}
+          <AddIcon onClickHandler={onClickAddTagIconHandler} />
+        </div>
+      </div>
+    </div>
+  );
+  // 右ページ要素
+  const rightPageElement = (
+    <div className={classes.diaryFormWrap}>
+      <div className={classes.diaryForm}>
+        <div>
+          <label htmlFor="content">内容</label>
+          <textarea
+            ref={contentRef}
+            id="content"
+            name="content"
+            rows={20}
+            maxLength={3000}
+            defaultValue={content}
+            onChange={onChangeInputHandler}
+          />
+        </div>
+        {showCancelButton && (
+          <Button
+            text={"キャンセル"}
+            clickHandler={onClickCancelButtonHandler}
+          />
+        )}
+        <Button
+          text={isModifyForm ? "修正" : "日記を追加"}
+          isSubmit={true}
+          isDisabled={isDisabled}
+        />
+      </div>
+    </div>
+  );
 
   return (
     <form onSubmit={onSubmitHandler}>
-      <div>
-        <label htmlFor="date">日付</label>
-        <DatePicker
-          dateFormat="yyyy/MM/dd"
-          locale="ja"
-          selected={selectedDate}
-          onChange={onChangeDateHandler}
-        />
-      </div>
-      <div>
-        <label htmlFor="title">タイトル</label>
-        <input
-          ref={titleRef}
-          type="text"
-          id="title"
-          name="title"
-          maxLength={150}
-          defaultValue={title}
-          onChange={onChangeInputHandler}
-        />
-      </div>
-      <div>
-        <label htmlFor="content">内容</label>
-        <textarea
-          ref={contentRef}
-          id="content"
-          name="content"
-          rows={20}
-          maxLength={3000}
-          defaultValue={content}
-          onChange={onChangeInputHandler}
-        />
-      </div>
-      <div>
-        <label htmlFor="tag">タグ</label>
-        {tagInputElement}
-        <AddIcon onClickHandler={onClickAddTagIconHandler} />
-      </div>
-      {showCancelButton && (
-        <Button text={"キャンセル"} clickHandler={onClickCancelButtonHandler} />
-      )}
-      <Button
-        text={isModifyForm ? "修正" : "日記を追加"}
-        isSubmit={true}
-        isDisabled={isDisabled}
-      />
+      <Book leftPage={leftPageElement} rightPage={rightPageElement} />
     </form>
   );
 };

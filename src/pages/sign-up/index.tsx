@@ -1,4 +1,4 @@
-import MainLayout from "@/components/layout/MainLayout";
+import Book from "@/components/layout/Book";
 import SignUpForm from "@/components/sign-up/SignUpForm";
 
 /**
@@ -7,11 +7,7 @@ import SignUpForm from "@/components/sign-up/SignUpForm";
  * @returns {JSX.Element} ユーザ登録画面.
  */
 const SignUpPage = () => {
-  return (
-    <MainLayout>
-      <SignUpForm />
-    </MainLayout>
-  );
+  return <Book leftPage={<></>} rightPage={<SignUpForm />} />;
 };
 
 export default SignUpPage;
