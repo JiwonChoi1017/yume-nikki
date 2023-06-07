@@ -24,17 +24,15 @@ export class DiaryHelper {
    * 全ての日記を取得.
    *
    * @param {string} currentUserId - 現在のユーザーid
-   * @param {string[]} diaryQuery - (任意)クエリ
+   * @param {string} year - 年
+   * @param {string} month - 月
    * @returns {Promise<QuerySnapshot<DocumentData>>} 全ての日記データ.
    */
   async fetchAllDiary(
     currentUserId: string,
-    diaryQuery?: string[]
+    year: string,
+    month: string
   ): Promise<QuerySnapshot<DocumentData>> {
-    const now = new Date();
-    const year = diaryQuery?.[0] ?? now.getFullYear().toString();
-    const month = diaryQuery?.[1] ?? now.getMonth().toString();
-
     const fetchAllQuery = query(
       collection(db, currentUserId),
       where("year", "==", year.toString()),

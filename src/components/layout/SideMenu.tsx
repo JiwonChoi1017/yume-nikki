@@ -2,16 +2,17 @@ import { FaCalendarAlt, FaPlus, FaUserAlt } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
+import { IoClose } from "react-icons/io5";
 import Link from "next/link";
-import classes from "@/styles/Menu.module.css";
+import classes from "@/styles/SideMenu.module.css";
 import { useRouter } from "next/router";
 
 /**
- * メニュー.
+ * サイドメニュー.
  *
- * @returns {JSX.Element} メニュー.
+ * @returns {JSX.Element} サイドメニュー.
  */
-const Menu = () => {
+const SideMenu = () => {
   // 現在の年月を取得
   const now = new Date();
   const year = now.getFullYear();
@@ -38,9 +39,13 @@ const Menu = () => {
     // router.push("/");
     router.push("/my");
   };
+  // 閉じるリンクのクリックイベントハンドラ
+  const onClickCloseLinkHandler = () => {
+    router.push("/");
+  };
 
   return (
-    <ul className={`${classes.menu} width__10per`}>
+    <ul className={`${classes.sideMenu} width__10per`}>
       <li>
         <Link href="/form">
           <FaPlus />
@@ -54,8 +59,12 @@ const Menu = () => {
       <li onClick={isSignIn ? onClickSignOutHandler : onClickSignInIconHandler}>
         <FaUserAlt />
       </li>
+      <li className={classes.closeLink} onClick={onClickCloseLinkHandler}>
+        <IoClose className={classes.icon} />
+        <span>閉じる</span>
+      </li>
     </ul>
   );
 };
 
-export default Menu;
+export default SideMenu;

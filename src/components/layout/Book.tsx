@@ -1,4 +1,4 @@
-import Menu from "./Menu";
+import SideMenu from "./SideMenu";
 import classes from "@/styles/Book.module.css";
 
 /** Props. */
@@ -18,7 +18,7 @@ interface Props {
 const Book = ({ leftPage, rightPage }: Props) => {
   return (
     <div className={classes.bookWrap}>
-      <Menu />
+      <SideMenu />
       <div className={classes.cover}>
         <div className={classes.book}>
           {/* 左ページ */}

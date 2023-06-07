@@ -1,4 +1,3 @@
-import MainLayout from "@/components/layout/MainLayout";
 import React from "react";
 import Room from "@/components/model/Room";
 
@@ -8,11 +7,7 @@ import Room from "@/components/model/Room";
  * @returns {JSX.Element} ホーム画面.
  */
 const HomePage = () => {
-  return (
-    <MainLayout>
-      <Room />
-    </MainLayout>
-  );
+  return <Room />;
 };
 
 export default HomePage;

@@ -8,7 +8,7 @@ import { Diary } from "@/types/Diary";
 import { DiaryHelper } from "@/helpers/diary-helper";
 import DiaryList from "@/components/list/DiaryList";
 import { EventClickArg } from "@fullcalendar/core";
-import { LIST_QUERY_COUNT } from "@/constants/globalConstant";
+import { GetServerSideProps } from "next";
 import { YearMonth } from "@/types/Common";
 import { useRouter } from "next/router";
 
@@ -17,22 +17,32 @@ const diaryHelper = new DiaryHelper();
 // 日付関連ヘルパー
 const dateHelper = new DateHelper();
 
+/** Props. */
+interface Props {
+  /** 日付. */
+  date: {
+    /** 年. */
+    year: string;
+    /** 月. */
+    month: string;
+  };
+}
+
 /**
  * カレンダー画面.
  *
+ * @param {Props} Props
  * @returns {JSX.Element} カレンダー画面.
  */
-const CalendarPage = () => {
+const CalendarPage = ({ date: { year, month } }: Props) => {
   // 現在のユーザーid
   const { currentUserId } = useContext(AuthContext);
   // ルーター
   const router = useRouter();
-  // クエリ
-  const { query } = router.query;
   // 年月
   const [yearMonth, setYearMonth] = useState<YearMonth>({
-    year: "",
-    month: "",
+    year,
+    month,
   });
   // 読み込み中か
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -40,18 +50,14 @@ const CalendarPage = () => {
   const [diaryList, setDiaryList] = useState<Diary[]>([]);
 
   useEffect(() => {
-    if (
-      !Array.isArray(query) ||
-      query?.length !== LIST_QUERY_COUNT ||
-      !currentUserId
-    ) {
+    if (!currentUserId) {
       return;
     }
 
-    setYearMonth({ year: query[0], month: query[1] });
+    setYearMonth({ year, month });
 
     diaryHelper
-      .fetchAllDiary(currentUserId, query)
+      .fetchAllDiary(currentUserId, year, month)
       .then((snapshot) => {
         const tempDiaryList: Diary[] = [];
         snapshot.forEach((doc) => {
@@ -87,7 +93,7 @@ const CalendarPage = () => {
       });
 
     setIsLoading(false);
-  }, [query, currentUserId, yearMonth.year, yearMonth.month]);
+  }, [currentUserId, year, month, yearMonth.year, yearMonth.month]);
 
   // 「今日」クリックイベントハンドラ
   const clickTodayHandler = () => {
@@ -140,3 +146,32 @@ const CalendarPage = () => {
 };
 
 export default CalendarPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { params } = context;
+  const filterData = params?.query;
+
+  // クエリが取得できなかった場合、notFoundをtrueにしてリターン
+  if (!filterData) {
+    return { notFound: true };
+  }
+
+  const numYear = +filterData[0];
+  const numMonth = +filterData[1];
+
+  // 年月が数字じゃない、もしくは正しくない月だった場合、notFoundをtrueにしてリターン
+  if (isNaN(numYear) || isNaN(numMonth) || numMonth > 12 || numMonth < 1) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      date: {
+        year: numYear.toString(),
+        month: numMonth.toString(),
+      },
+    },
+  };
+};
