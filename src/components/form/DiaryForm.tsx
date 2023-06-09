@@ -239,7 +239,11 @@ const DiaryForm = ({
 
   return (
     <form onSubmit={onSubmitHandler}>
-      <Book leftPage={leftPageElement} rightPage={rightPageElement} />
+      <Book
+        leftPage={leftPageElement}
+        rightPage={rightPageElement}
+        currentPage="diaryForm"
+      />
     </form>
   );
 };

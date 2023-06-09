@@ -43,6 +43,7 @@ const DiaryDetail = ({ diaryInfo, onClickDeleteButtonHandler }: Props) => {
           <p>{content}</p>
         </>
       }
+      currentPage="detail"
     />
   );
 };

@@ -141,6 +141,7 @@ const CalendarPage = ({ date: { year, month } }: Props) => {
       }
       // 日記リスト
       rightPage={<DiaryList isLoading={isLoading} diaryList={diaryList} />}
+      currentPage="calendar"
     />
   );
 };

@@ -7,7 +7,9 @@ import SignUpForm from "@/components/sign-up/SignUpForm";
  * @returns {JSX.Element} ユーザ登録画面.
  */
 const SignUpPage = () => {
-  return <Book leftPage={<></>} rightPage={<SignUpForm />} />;
+  return (
+    <Book leftPage={<></>} rightPage={<SignUpForm />} currentPage="signUp" />
+  );
 };
 
 export default SignUpPage;

@@ -1,11 +1,17 @@
 .sideMenu {
-  margin-top: 30px;
+  margin-top: calc(var(--baseline) * 5);
+  width: 12%;
 }
 
 .sideMenu li {
-  margin-bottom: 5px;
-  padding: 7px 10px;
-  background-color: antiquewhite;
+  margin-bottom: 10px;
+  padding: 7px 15px;
+  min-height: calc(var(--baseline) * 3);
+  color: rgb(238, 254, 255);
+  background-color: rgba(209, 228, 228, 0.342);
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #fff;
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -15,14 +21,29 @@
   cursor: pointer;
 }
 
+.sideMenu li:hover {
+  color: rgb(38, 59, 60);
+  background-color: #fff;
+}
+
+.active {
+  color: rgb(38, 59, 60) !important;
+  background-color: #fff !important;
+}
+
 .sideMenu span {
   margin-left: 10px;
+  z-index: 2;
 }
 
 .icon {
+  font-size: 15px;
+}
+
+.closeIcon {
   font-size: 20px;
 }
 
 .closeLink {
-  margin-top: calc(var(--baseline) * 40);
+  margin-top: calc(var(--baseline) * 35);
 }

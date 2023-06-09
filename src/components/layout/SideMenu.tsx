@@ -3,16 +3,23 @@ import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
 import { IoClose } from "react-icons/io5";
-import Link from "next/link";
+import { PageKind } from "@/types/Common";
 import classes from "@/styles/SideMenu.module.css";
 import { useRouter } from "next/router";
+
+/** Props. */
+interface Props {
+  /** 現在のページ. */
+  currentPage: PageKind;
+}
 
 /**
  * サイドメニュー.
  *
+ * @param {Props} Props
  * @returns {JSX.Element} サイドメニュー.
  */
-const SideMenu = () => {
+const SideMenu = ({ currentPage }: Props) => {
   // 現在の年月を取得
   const now = new Date();
   const year = now.getFullYear();
@@ -28,6 +35,14 @@ const SideMenu = () => {
     setIsSignIn(!!currentUser);
   }, [currentUser]);
 
+  // 追加アイコンのクリックイベントハンドラ
+  const onClickAddIconHanlder = () => {
+    router.push("/form");
+  };
+  // カレンダーアイコンのクリックイベントハンドラ
+  const onClickCalendarIconHanlder = () => {
+    router.push(`/calendar/${year}/${month}`);
+  };
   // ログインアイコンのクリックイベントハンドラ
   const onClickSignInIconHandler = () => {
     router.push("/sign-in");
@@ -45,22 +60,39 @@ const SideMenu = () => {
   };
 
   return (
-    <ul className={`${classes.sideMenu} width__10per`}>
-      <li>
-        <Link href="/form">
-          <FaPlus />
-        </Link>
+    <ul className={classes.sideMenu}>
+      <li
+        className={`${currentPage === "diaryForm" ? classes.active : ""}`}
+        onClick={onClickAddIconHanlder}
+      >
+        <FaPlus className={classes.icon} />
+        <span>日記を作成</span>
       </li>
-      <li>
-        <Link href={`/calendar/${year}/${month}`}>
-          <FaCalendarAlt />
-        </Link>
+      <li
+        className={`${currentPage === "calendar" ? classes.active : ""}`}
+        onClick={onClickCalendarIconHanlder}
+      >
+        <FaCalendarAlt className={classes.icon} />
+        <span>カレンダー</span>
       </li>
-      <li onClick={isSignIn ? onClickSignOutHandler : onClickSignInIconHandler}>
-        <FaUserAlt />
+      <li
+        className={`${
+          currentPage === "signIn" ||
+          currentPage === "signUp" ||
+          currentPage === "my"
+            ? classes.active
+            : ""
+        }`}
+        onClick={isSignIn ? onClickSignOutHandler : onClickSignInIconHandler}
+      >
+        <FaUserAlt className={classes.icon} />
+        <span>{isSignIn ? "マイページ" : "ログイン"}</span>
       </li>
-      <li className={classes.closeLink} onClick={onClickCloseLinkHandler}>
-        <IoClose className={classes.icon} />
+      <li
+        className={`${classes.closeLink} ${classes.active}`}
+        onClick={onClickCloseLinkHandler}
+      >
+        <IoClose className={classes.closeIcon} />
         <span>閉じる</span>
       </li>
     </ul>
