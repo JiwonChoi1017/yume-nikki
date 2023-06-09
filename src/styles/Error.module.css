@@ -1,0 +1,23 @@
+.title {
+  display: block;
+  margin-bottom: 5px;
+  color: rgb(38, 59, 60);
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: rgb(38, 59, 60);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.detail {
+  color: rgb(38, 59, 60);
+  margin: 30px 0;
+}
+
+.topLink {
+  background-color: #fff;
+  padding: 1rem 3rem;
+}

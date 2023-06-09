@@ -1,3 +1,5 @@
+import classes from "@/styles/Button.module.css";
+
 /** Props. */
 interface Props {
   /** テキスト. */
@@ -41,4 +43,18 @@ export const Button = ({
   );
 
   return button;
+};
+
+/**
+ * モーダル用ボタン.
+ *
+ * @param {Props} props
+ * @returns {JSX.Element} モーダル用ボタン.
+ */
+export const ModalButton = ({ text, clickHandler }: Props) => {
+  return (
+    <button className={classes.modalButton} onClick={clickHandler}>
+      {text}
+    </button>
+  );
 };
