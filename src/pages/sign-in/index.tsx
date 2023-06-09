@@ -7,7 +7,9 @@ import SignInForm from "@/components/sign-in/SignInForm";
  * @returns {JSX.Element} ログイン画面.
  */
 const SignInPage = () => {
-  return <Book leftPage={<></>} rightPage={<SignInForm />} />;
+  return (
+    <Book leftPage={<></>} rightPage={<SignInForm />} currentPage="signIn" />
+  );
 };
 
 export default SignInPage;

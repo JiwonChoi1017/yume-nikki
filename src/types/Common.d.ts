@@ -5,3 +5,13 @@ export type YearMonth = {
   /** 月. */
   month: string;
 };
+
+/** ページ種別. */
+export type PageKind =
+  | "main"
+  | "diaryForm"
+  | "calendar"
+  | "signIn"
+  | "signUp"
+  | "my"
+  | "detail";
