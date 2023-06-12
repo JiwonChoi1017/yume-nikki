@@ -44,4 +44,5 @@
   position: relative;
   padding: var(--book-spacing);
   height: 100%;
+  overflow: scroll;
 }
