@@ -33,6 +33,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@emotion/styled": "^11.11.0",
     "@types/react-datepicker": "^4.11.2",
     "@types/three": "^0.150.1",
     "@types/uuid": "^9.0.1"

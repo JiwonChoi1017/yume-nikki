@@ -27,7 +27,12 @@ const DiaryList = ({ isLoading, diaryList }: Props) => {
     </ul>
   );
 
-  return diaryListElement;
+  return (
+    <div className={classes.diaryListWrap}>
+      <span className={classes.index}>日記リスト</span>
+      {diaryListElement}
+    </div>
+  );
 };
 
 export default DiaryList;
