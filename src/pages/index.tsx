@@ -1,5 +1,8 @@
+import DreamSpace from "@/components/model/DreamSpace";
+import Logo from "@/components/ui/Logo";
+import { OpenDiaryButton } from "@/components/ui/Button";
 import React from "react";
-import Room from "@/components/model/Room";
+import { useRouter } from "next/router";
 
 /**
  * ホーム画面.
@@ -7,7 +10,21 @@ import Room from "@/components/model/Room";
  * @returns {JSX.Element} ホーム画面.
  */
 const HomePage = () => {
-  return <Room />;
+  // ルーター
+  const router = useRouter();
+
+  // 日記を開くイベントハンドラ
+  const openDiaryHandler = () => {
+    router.push("/calendar");
+  };
+
+  return (
+    <>
+      <DreamSpace />
+      <Logo />
+      <OpenDiaryButton text="夢日記を作成" clickHandler={openDiaryHandler} />
+    </>
+  );
 };
 
 export default HomePage;

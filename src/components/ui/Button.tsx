@@ -46,6 +46,20 @@ export const Button = ({
 };
 
 /**
+ * 日記を開くボタン.
+ *
+ * @param {Props} props
+ * @returns {JSX.Element} モーダル用ボタン.
+ */
+export const OpenDiaryButton = ({ text, clickHandler }: Props) => {
+  return (
+    <button className={classes.openDiaryButton} onClick={clickHandler}>
+      {text}
+    </button>
+  );
+};
+
+/**
  * モーダル用ボタン.
  *
  * @param {Props} props

@@ -30,16 +30,15 @@ const Model = () => {
 };
 
 /**
- * 部屋.
+ * 夢の空間.
  *
- * @returns {JSX.Element} 部屋.
+ * @returns {JSX.Element} 夢の空間.
  */
-const Room = () => {
+const DreamSpace = () => {
   return (
     <>
       {/* TODO: カメラ・背景の調整が必要 */}
       <Canvas shadows camera={{ fov: 45, position: [-7, 0, -7] }}>
-        <color attach="background" args={["blue"]} />
         <Lights />
         <Suspense>
           <Model />
@@ -50,4 +49,4 @@ const Room = () => {
   );
 };
 
-export default Room;
+export default DreamSpace;
