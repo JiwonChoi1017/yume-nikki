@@ -60,6 +60,20 @@ export const OpenDiaryButton = ({ text, clickHandler }: Props) => {
 };
 
 /**
+ * 日記追加ボタン.
+ *
+ * @param {Props} props
+ * @returns {JSX.Element} 日記追加ボタン.
+ */
+export const AddDiaryButton = ({ text, clickHandler }: Props) => {
+  return (
+    <button className={classes.addDiaryButton} onClick={clickHandler}>
+      {text}
+    </button>
+  );
+};
+
+/**
  * モーダル用ボタン.
  *
  * @param {Props} props

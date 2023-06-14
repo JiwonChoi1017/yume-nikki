@@ -48,6 +48,8 @@ const CalendarPage = ({ date: { year, month } }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // 日記リスト
   const [diaryList, setDiaryList] = useState<Diary[]>([]);
+  // 日記リストを表示するか
+  const [showDiaryList, setShowDiaryList] = useState<boolean>(true);
 
   useEffect(() => {
     if (!currentUserId) {
@@ -86,7 +88,12 @@ const CalendarPage = ({ date: { year, month } }: Props) => {
             updatedAt: updatedAt ?? new Date(),
           });
         });
-        setDiaryList(tempDiaryList);
+        // 日記リストを日付順で並び替え
+        const sortedDiaryList = [...tempDiaryList].sort((a, b) => {
+          return a.date.getTime() - b.date.getTime();
+        });
+        setDiaryList(sortedDiaryList);
+        setShowDiaryList(sortedDiaryList.length > 0);
       })
       .catch(() => {
         //
@@ -140,7 +147,13 @@ const CalendarPage = ({ date: { year, month } }: Props) => {
         />
       }
       // 日記リスト
-      rightPage={<DiaryList isLoading={isLoading} diaryList={diaryList} />}
+      rightPage={
+        <DiaryList
+          isLoading={isLoading}
+          diaryList={diaryList}
+          showDiaryList={showDiaryList}
+        />
+      }
       currentPage="calendar"
     />
   );

@@ -66,7 +66,7 @@ const SideMenu = ({ currentPage }: Props) => {
         onClick={onClickAddIconHanlder}
       >
         <FaPlus className={classes.icon} />
-        <span>日記を作成</span>
+        <span>夢日記を作成</span>
       </li>
       <li
         className={`${currentPage === "calendar" ? classes.active : ""}`}
