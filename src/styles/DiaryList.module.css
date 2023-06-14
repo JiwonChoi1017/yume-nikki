@@ -13,3 +13,9 @@
 .diaryList {
   margin-top: 40px;
 }
+
+.notExistMessage {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
