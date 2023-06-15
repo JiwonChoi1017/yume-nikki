@@ -22,7 +22,7 @@ const HomePage = () => {
     <>
       <DreamSpace />
       <Logo />
-      <OpenDiaryButton text="夢日記を作成" clickHandler={openDiaryHandler} />
+      <OpenDiaryButton text="日記帳を開く" clickHandler={openDiaryHandler} />
     </>
   );
 };
