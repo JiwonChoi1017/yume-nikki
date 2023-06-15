@@ -35,7 +35,7 @@ export const CalendarStyleWrapper = styled.div`
     margin-bottom: 2rem;
   }
   .fc .fc-view-harness {
-    height: calc(var(--baseline) * 35) !important;
+    min-height: calc(var(--baseline) * 35) !important;
   }
   .fc .fc-button-primary {
     background-color: transparent;
@@ -48,6 +48,10 @@ export const CalendarStyleWrapper = styled.div`
   }
   .fc .fc-daygrid-day-number {
     color: rgb(38, 59, 60);
+  }
+  .fc .fc-daygrid-day-frame {
+    max-height: calc(var(--baseline) * 7);
+    overflow: hidden;
   }
   .fc .fc-daygrid-event-harness {
     display: flex;

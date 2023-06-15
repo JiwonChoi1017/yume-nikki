@@ -2,6 +2,8 @@ import classes from "@/styles/Button.module.css";
 
 /** Props. */
 interface Props {
+  /** class名. */
+  className?: string;
   /** テキスト. */
   text: string;
   /** (任意)送信ボタンか. */
@@ -15,24 +17,29 @@ interface Props {
 /**
  * ボタン.
  *
- * @param {string} text - テキスト.
- * @param {boolean} isSubmit - (任意)送信ボタンか.
- * @param {boolean} isDisabled - (任意)非活性状態か.
- * @param {string} clickHandler - (任意)クリックイベントハンドラ.
+ * @param {Props} props
  * @returns {JSX.Element} ボタン.
  */
 export const Button = ({
+  className,
   text,
   isSubmit = false,
   isDisabled = false,
   clickHandler,
 }: Props) => {
   const button = isSubmit ? (
-    <button type="submit" disabled={isDisabled}>
+    <button
+      className={`${classes.button} ${classes.submitButton}${
+        className ? ` ${classes[className]}` : ""
+      }`}
+      type="submit"
+      disabled={isDisabled}
+    >
       {text}
     </button>
   ) : (
     <button
+      className={classes.button}
       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
         if (!clickHandler) return;
         clickHandler(e);
@@ -43,6 +50,39 @@ export const Button = ({
   );
 
   return button;
+};
+
+/**
+ * ダブルボタン.
+ *
+ * @param {Props} first - 1つ目.
+ * @param {Props} second - 2つ目.
+ * @returns {JSX.Element} ダブルボタン.
+ */
+export const DoubleButton: React.FC<{
+  button: {
+    first: Props;
+    second: Props;
+  };
+}> = ({ button }) => {
+  const { first, second } = button;
+
+  return (
+    <div className={classes.button__wrap}>
+      <Button
+        text={first.text}
+        isSubmit={first.isSubmit}
+        isDisabled={first.isDisabled}
+        clickHandler={first.clickHandler}
+      />
+      <Button
+        text={second.text}
+        isSubmit={second.isSubmit}
+        isDisabled={second.isDisabled}
+        clickHandler={second.clickHandler}
+      />
+    </div>
+  );
 };
 
 /**
