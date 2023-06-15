@@ -19,7 +19,9 @@ const DiaryItem = ({ diary }: Props) => {
   // ルーター
   const router = useRouter();
   //　詳細ページに遷移
-  const moveToDetailPage = () => {
+  const moveToDetailPage = (e: React.MouseEvent<HTMLLIElement>) => {
+    e.preventDefault();
+
     router.push(`/detail?id=${id}`);
   };
 

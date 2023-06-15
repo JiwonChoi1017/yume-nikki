@@ -1,11 +1,11 @@
 import "react-datepicker/dist/react-datepicker.css";
 
 import { AddIcon, DeleteIcon } from "../ui/Icon";
+import { Button, DoubleButton } from "../ui/Button";
 import DatePicker, { registerLocale } from "react-datepicker";
 import React, { useEffect, useRef, useState } from "react";
 
 import Book from "../layout/Book";
-import { Button } from "../ui/Button";
 import { Diary } from "@/types/Diary";
 import classes from "@/styles/DiaryForm.module.css";
 import ja from "date-fns/locale/ja";
@@ -160,8 +160,9 @@ const DiaryForm = ({
   // タグ入力要素
   const tagInputElement = tagList.map((tag, index) => {
     return (
-      <div key={index}>
+      <div key={index} className={classes.tagInputWrap}>
         <input
+          className={classes.tagInput}
           type="text"
           maxLength={50}
           value={tag}
@@ -199,12 +200,37 @@ const DiaryForm = ({
           />
         </div>
         <div>
-          <label htmlFor="tag">タグ</label>
+          <label className={classes.tagLabel} htmlFor="tag">
+            タグ
+            <AddIcon onClickHandler={onClickAddTagIconHandler} />
+          </label>
           {tagInputElement}
-          <AddIcon onClickHandler={onClickAddTagIconHandler} />
         </div>
       </div>
     </div>
+  );
+  //ボタン要素
+  const buttonElement = showCancelButton ? (
+    <DoubleButton
+      button={{
+        first: {
+          text: "キャンセル",
+          clickHandler: onClickCancelButtonHandler,
+        },
+        second: {
+          text: isModifyForm ? "修正" : "単語帳を追加",
+          isSubmit: true,
+          isDisabled,
+        },
+      }}
+    />
+  ) : (
+    <Button
+      className="singleButton"
+      text={isModifyForm ? "修正" : "日記を追加"}
+      isSubmit={true}
+      isDisabled={isDisabled}
+    />
   );
   // 右ページ要素
   const rightPageElement = (
@@ -216,23 +242,13 @@ const DiaryForm = ({
             ref={contentRef}
             id="content"
             name="content"
-            rows={20}
+            rows={28}
             maxLength={3000}
             defaultValue={content}
             onChange={onChangeInputHandler}
           />
         </div>
-        {showCancelButton && (
-          <Button
-            text={"キャンセル"}
-            clickHandler={onClickCancelButtonHandler}
-          />
-        )}
-        <Button
-          text={isModifyForm ? "修正" : "日記を追加"}
-          isSubmit={true}
-          isDisabled={isDisabled}
-        />
+        {buttonElement}
       </div>
     </div>
   );

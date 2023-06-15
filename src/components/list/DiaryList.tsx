@@ -51,6 +51,7 @@ const DiaryList = ({ isLoading, diaryList, showDiaryList }: Props) => {
       {diaryList.map((diary) => {
         return <DiaryItem key={diary.id} diary={diary} />;
       })}
+      <AddDiaryButton text="夢日記を作成" clickHandler={moveToFormPage} />
     </ul>
   );
   return (

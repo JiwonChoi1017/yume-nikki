@@ -1,5 +1,6 @@
 import { FaPlus } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import classes from "@/styles/Icon.module.css";
 
 /**
  * 追加アイコン.
@@ -10,7 +11,11 @@ import { IoClose } from "react-icons/io5";
 export const AddIcon: React.FC<{ onClickHandler: () => void }> = ({
   onClickHandler,
 }) => {
-  return <FaPlus onClick={onClickHandler} />;
+  return (
+    <div className={classes.addIconWrap}>
+      <FaPlus className={classes.addIcon} onClick={onClickHandler} />
+    </div>
+  );
 };
 
 /**
@@ -22,5 +27,5 @@ export const AddIcon: React.FC<{ onClickHandler: () => void }> = ({
 export const DeleteIcon: React.FC<{
   onClickHandler: () => void;
 }> = ({ onClickHandler }) => {
-  return <IoClose onClick={onClickHandler} />;
+  return <IoClose className={classes.deleteIcon} onClick={onClickHandler} />;
 };
