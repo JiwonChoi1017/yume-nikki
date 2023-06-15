@@ -1,0 +1,47 @@
+.titleWrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.titleWrap span:not(.tag) {
+  display: block;
+  color: rgb(38, 59, 60);
+}
+
+.titleWrap .date {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.titleWrap .title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.titleWrap .tagWrap {
+  margin-top: 20px;
+}
+
+.titleWrap .tagWrap .tag {
+  background-color: #6faab0;
+  color: white;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.contentWrap {
+  height: 100%;
+}
+
+.content {
+  height: 90%;
+  margin: 0;
+  margin-bottom: 20px;
+  color: rgb(38, 59, 60);
+  overflow: scroll;
+}

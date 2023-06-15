@@ -7,7 +7,7 @@
 .button {
   width: 49%;
   padding: 0.5rem 2rem;
-  background-color: #fff;
+  background-color: rgba(179, 229, 229, 0.342);
   border: none;
   border-radius: 4px;
   color: rgb(38, 59, 60);
@@ -17,7 +17,7 @@
 }
 
 .button:hover {
-  background-color: rgba(179, 229, 229, 0.342);
+  background-color: #fff;
 }
 
 .button:disabled {
@@ -27,7 +27,7 @@
 }
 
 .submitButton {
-  background-color: rgba(139, 210, 210, 0.342);
+  background-color: rgba(94, 164, 164, 0.62);
 }
 
 .singleButton {
@@ -47,7 +47,7 @@
 }
 
 .addDiaryButton:hover {
-  background-color: rgba(179, 229, 229, 0.342);
+  background-color: #fff;
 }
 
 .openDiaryButton {

@@ -218,7 +218,7 @@ const DiaryForm = ({
           clickHandler: onClickCancelButtonHandler,
         },
         second: {
-          text: isModifyForm ? "修正" : "単語帳を追加",
+          text: isModifyForm ? "修正" : "夢日記を追加",
           isSubmit: true,
           isDisabled,
         },
@@ -227,7 +227,7 @@ const DiaryForm = ({
   ) : (
     <Button
       className="singleButton"
-      text={isModifyForm ? "修正" : "日記を追加"}
+      text={isModifyForm ? "修正" : "夢日記を追加"}
       isSubmit={true}
       isDisabled={isDisabled}
     />
