@@ -39,7 +39,10 @@ export const Button = ({
     </button>
   ) : (
     <button
-      className={classes.button}
+      className={`${classes.button}${
+        className ? ` ${classes[className]}` : ""
+      }`}
+      disabled={isDisabled}
       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
         if (!clickHandler) return;
         clickHandler(e);
@@ -70,12 +73,14 @@ export const DoubleButton: React.FC<{
   return (
     <div className={classes.button__wrap}>
       <Button
+        className={first.className}
         text={first.text}
         isSubmit={first.isSubmit}
         isDisabled={first.isDisabled}
         clickHandler={first.clickHandler}
       />
       <Button
+        className={second.className}
         text={second.text}
         isSubmit={second.isSubmit}
         isDisabled={second.isDisabled}

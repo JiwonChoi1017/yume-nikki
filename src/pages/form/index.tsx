@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
+import { BackgroundBubbles } from "@/components/model/Bubbles";
 import { DateHelper } from "@/helpers/date-helper";
 import { Diary } from "@/types/Diary";
 import DiaryForm from "@/components/form/DiaryForm";
@@ -122,14 +123,17 @@ const FormPage = ({ referer, id }: Props) => {
   };
 
   return (
-    <DiaryForm
-      isModifyForm={!!id}
-      diaryInfo={diaryInfo}
-      addDiaryHandler={addDiaryHandler}
-      updateDiaryHandler={updateDiaryHandler}
-      showCancelButton={showCancelButton}
-      onClickCancelButtonHandler={goBackPreviousPage}
-    />
+    <>
+      <DiaryForm
+        isModifyForm={!!id}
+        diaryInfo={diaryInfo}
+        addDiaryHandler={addDiaryHandler}
+        updateDiaryHandler={updateDiaryHandler}
+        showCancelButton={showCancelButton}
+        onClickCancelButtonHandler={goBackPreviousPage}
+      />
+      <BackgroundBubbles />
+    </>
   );
 };
 
