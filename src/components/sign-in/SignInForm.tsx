@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
-import { Button } from "../ui/Button";
+import { DoubleButton } from "../ui/Button";
 import { ErrorInfo } from "@/types/Error";
 import { RESPONSE_STATUS } from "@/constants/globalConstant";
 import UserForm from "../layout/UserForm";
@@ -16,12 +16,15 @@ const SignInForm = () => {
   // 各入力項目のref
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
   // 活性/非活性状態
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   // エラー情報
   const [errorInfo, setErrorInfo] = useState<ErrorInfo | null>(null);
+
   // ルーター
   const router = useRouter();
+
   // ログインイベントハンドラ
   const { signInHandler } = useContext(AuthContext);
   // 送信イベント
@@ -58,6 +61,7 @@ const SignInForm = () => {
     // 活性/非活性状態を更新
     setIsDisabled(!email || !password || password.length < 10);
   };
+
   // エラーメッセージ
   const errorMsg = errorInfo?.status === RESPONSE_STATUS.ERROR && (
     <p className="errorMsg">{errorInfo.message}</p>
@@ -87,8 +91,19 @@ const SignInForm = () => {
           onChange={onChangeInputHandler}
         />
       </div>
-      <Button text="ログイン" isSubmit={true} isDisabled={isDisabled} />
-      <Button text="新規登録" clickHandler={onClickSignUpButtonHandler} />
+      <DoubleButton
+        button={{
+          first: {
+            text: "ログイン",
+            isSubmit: true,
+            isDisabled,
+          },
+          second: {
+            text: "新規登録",
+            clickHandler: onClickSignUpButtonHandler,
+          },
+        }}
+      />
     </UserForm>
   );
 };

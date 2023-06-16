@@ -16,7 +16,7 @@ interface Props {
 /**
  * サイドメニュー.
  *
- * @param {Props} Props
+ * @param {Props} props
  * @returns {JSX.Element} サイドメニュー.
  */
 const SideMenu = ({ currentPage }: Props) => {
@@ -26,8 +26,8 @@ const SideMenu = ({ currentPage }: Props) => {
   const month = now.getMonth() + 1;
   // ログイン中か
   const [isSignIn, setIsSignIn] = useState<boolean>(false);
-  // ログアウトイベントハンドラ、現在のユーザー
-  const { signOutHandler, currentUser } = useContext(AuthContext);
+  // 現在のユーザー
+  const { currentUser } = useContext(AuthContext);
   // ルーター
   const router = useRouter();
 
@@ -35,23 +35,20 @@ const SideMenu = ({ currentPage }: Props) => {
     setIsSignIn(!!currentUser);
   }, [currentUser]);
 
-  // 追加アイコンのクリックイベントハンドラ
-  const onClickAddIconHanlder = () => {
+  // 追加リンクのクリックイベントハンドラ
+  const onClickAddLinkHanlder = () => {
     router.push("/form");
   };
-  // カレンダーアイコンのクリックイベントハンドラ
-  const onClickCalendarIconHanlder = () => {
+  // カレンダーリンクのクリックイベントハンドラ
+  const onClickCalendarLinkHanlder = () => {
     router.push(`/calendar/${year}/${month}`);
   };
-  // ログインアイコンのクリックイベントハンドラ
-  const onClickSignInIconHandler = () => {
+  // ログインリンクのクリックイベントハンドラ
+  const onClickSignInLinkHandler = () => {
     router.push("/sign-in");
   };
-  // ログアウトアイコンのクリックイベントハンドラ
-  const onClickSignOutHandler = async () => {
-    // await signOutHandler();
-    // setIsSignIn(!!currentUser);
-    // router.push("/");
+  // マイページリンクのクリックイベントハンドラ
+  const onClickMyLinkHandler = async () => {
     router.push("/my");
   };
   // 閉じるリンクのクリックイベントハンドラ
@@ -63,14 +60,14 @@ const SideMenu = ({ currentPage }: Props) => {
     <ul className={classes.sideMenu}>
       <li
         className={`${currentPage === "diaryForm" ? classes.active : ""}`}
-        onClick={onClickAddIconHanlder}
+        onClick={onClickAddLinkHanlder}
       >
         <FaPlus className={classes.icon} />
         <span>夢日記を作成</span>
       </li>
       <li
         className={`${currentPage === "calendar" ? classes.active : ""}`}
-        onClick={onClickCalendarIconHanlder}
+        onClick={onClickCalendarLinkHanlder}
       >
         <FaCalendarAlt className={classes.icon} />
         <span>カレンダー</span>
@@ -83,7 +80,7 @@ const SideMenu = ({ currentPage }: Props) => {
             ? classes.active
             : ""
         }`}
-        onClick={isSignIn ? onClickSignOutHandler : onClickSignInIconHandler}
+        onClick={isSignIn ? onClickMyLinkHandler : onClickSignInLinkHandler}
       >
         <FaUserAlt className={classes.icon} />
         <span>{isSignIn ? "マイページ" : "ログイン"}</span>

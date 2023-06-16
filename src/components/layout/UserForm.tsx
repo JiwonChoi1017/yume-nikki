@@ -13,16 +13,18 @@ interface Props {
 /**
  * ユーザーフォーム.
  *
- * @param {Props} Props
+ * @param {Props} props
  * @returns {JSX.Element} ユーザーフォーム.
  */
 const UserForm = ({ children, title, onSubmitHandler }: Props) => {
   return (
-    <div className={classes.userForm}>
-      <form onSubmit={onSubmitHandler}>
-        <h3>{title}</h3>
-        {children}
-      </form>
+    <div className={classes.userFormWrap}>
+      <div>
+        <span className={classes.index}>{title}</span>
+      </div>
+      <div className={classes.userForm}>
+        <form onSubmit={onSubmitHandler}>{children}</form>
+      </div>
     </div>
   );
 };
