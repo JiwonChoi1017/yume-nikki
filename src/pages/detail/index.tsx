@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
+import { BackgroundBubbles } from "@/components/model/Bubbles";
 import { DateHelper } from "@/helpers/date-helper";
 import { Diary } from "@/types/Diary";
 import DiaryDetail from "@/components/detail/DiaryDetail";
@@ -98,10 +99,13 @@ const DetailPage = ({ id }: Props) => {
   };
 
   return (
-    <DiaryDetail
-      diaryInfo={diaryInfo}
-      onClickDeleteButtonHandler={deleteDiaryHandler}
-    />
+    <>
+      <DiaryDetail
+        diaryInfo={diaryInfo}
+        onClickDeleteButtonHandler={deleteDiaryHandler}
+      />
+      <BackgroundBubbles />
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
+import { BackgroundBubbles } from "@/components/model/Bubbles";
 import Book from "@/components/layout/Book";
 import SignInForm from "@/components/sign-in/SignInForm";
 import { useRouter } from "next/router";
@@ -25,7 +26,10 @@ const SignInPage = () => {
   }, [currentUser, router]);
 
   return (
-    <Book leftPage={<></>} rightPage={<SignInForm />} currentPage="signIn" />
+    <>
+      <Book leftPage={<></>} rightPage={<SignInForm />} currentPage="signIn" />
+      <BackgroundBubbles />
+    </>
   );
 };
 

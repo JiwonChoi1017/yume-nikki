@@ -1,21 +1,11 @@
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { ContactShadows, useGLTF } from "@react-three/drei";
+import { EffectComposer, SSAO } from "@react-three/postprocessing";
 
+import { Bubbles } from "./Bubbles";
 import { Canvas } from "@react-three/fiber";
+import Lights from "./Lights";
 import { Suspense } from "react";
-
-/**
- * 照明.
- *
- * @returns {JSX.Element} 照明.
- */
-const Lights = () => {
-  return (
-    <>
-      <directionalLight castShadow intensity={1.5} />
-      <ambientLight intensity={0.5} />
-    </>
-  );
-};
+import { Vector3 } from "three";
 
 /**
  * モデル.
@@ -23,9 +13,7 @@ const Lights = () => {
  * @returns {JSX.Element} モデル.
  */
 const Model = () => {
-  // TODO: Bakedしたモデルをインポート
   const roomModel = useGLTF("./models/clock.glb");
-
   return <primitive object={roomModel.scene} />;
 };
 
@@ -36,16 +24,30 @@ const Model = () => {
  */
 const DreamSpace = () => {
   return (
-    <>
-      {/* TODO: カメラ・背景の調整が必要 */}
-      <Canvas shadows camera={{ fov: 45, position: [-7, 0, -7] }}>
-        <Lights />
-        <Suspense>
-          <Model />
-        </Suspense>
-        <OrbitControls />
-      </Canvas>
-    </>
+    <Canvas shadows camera={{ fov: 45, position: [-7, 0, -7] }}>
+      <Lights />
+      <Suspense>
+        <Bubbles count={200} position={new Vector3(0, 10, 0)} />
+        <ContactShadows
+          rotation={[Math.PI / 2, 0, 0]}
+          position={[0, -30, 0]}
+          opacity={0.6}
+          width={130}
+          height={130}
+          blur={1}
+          far={40}
+        />
+        <EffectComposer multisampling={0}>
+          <SSAO
+            samples={20}
+            radius={5}
+            intensity={30}
+            luminanceInfluence={0.05}
+            color="rgb(255, 237, 119)"
+          />
+        </EffectComposer>
+      </Suspense>
+    </Canvas>
   );
 };
 

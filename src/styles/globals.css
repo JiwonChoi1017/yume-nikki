@@ -13,7 +13,7 @@
 html,
 body,
 #__next {
-  background: linear-gradient(30deg, #f1fdff, #6faab0);
+  background: linear-gradient(30deg, #f1fdff, #37a4b0);
   width: 100%;
   height: 100vh;
   display: flex;

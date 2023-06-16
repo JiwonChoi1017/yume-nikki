@@ -71,7 +71,7 @@ const DiaryForm = ({
   }, [diaryInfo]);
 
   // 送信イベントハンドラ
-  const onSubmitHandler = (e: React.FormEvent) => {
+  const onSubmitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (!titleRef.current || !contentRef.current) {
@@ -218,9 +218,10 @@ const DiaryForm = ({
           clickHandler: onClickCancelButtonHandler,
         },
         second: {
+          className: "submitButton",
           text: isModifyForm ? "修正" : "夢日記を追加",
-          isSubmit: true,
           isDisabled,
+          clickHandler: onSubmitHandler,
         },
       }}
     />
@@ -254,13 +255,11 @@ const DiaryForm = ({
   );
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <Book
-        leftPage={leftPageElement}
-        rightPage={rightPageElement}
-        currentPage="diaryForm"
-      />
-    </form>
+    <Book
+      leftPage={leftPageElement}
+      rightPage={rightPageElement}
+      currentPage="diaryForm"
+    />
   );
 };
 
