@@ -2,7 +2,7 @@ import { useContext, useRef, useState } from "react";
 
 import { AuthContext } from "@/contexts/AuthContext";
 import { AuthErrorCodes } from "firebase/auth";
-import { Button } from "../ui/Button";
+import { DoubleButton } from "../ui/Button";
 import { ErrorInfo } from "@/types/Error";
 import { RESPONSE_STATUS } from "@/constants/globalConstant";
 import UserForm from "../layout/UserForm";
@@ -106,8 +106,19 @@ const SignUpForm = () => {
         />
         {passwordErrorMsg}
       </div>
-      <Button text="登録する" isSubmit={true} isDisabled={isDisabled} />
-      <Button text="キャンセル" clickHandler={onCancelHandler} />
+      <DoubleButton
+        button={{
+          first: {
+            text: "登録する",
+            isSubmit: true,
+            isDisabled,
+          },
+          second: {
+            text: "キャンセル",
+            clickHandler: onCancelHandler,
+          },
+        }}
+      />
     </UserForm>
   );
 };

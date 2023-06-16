@@ -1,0 +1,35 @@
+.myPageMenuWrap {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: rgb(38, 59, 60);
+}
+
+.myPageMenuWrap .index {
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 5px;
+  border-bottom: 1px solid;
+}
+
+.myPageMenuWrap .myPageMenu {
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.myPageMenuWrap .myPageMenu .menu {
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.myPageMenuWrap .myPageMenu .menu:hover {
+  background-color: rgba(173, 195, 195, 0.342);
+  color: #fff;
+  border-radius: 4px;
+}
