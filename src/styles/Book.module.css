@@ -3,11 +3,6 @@
   margin: 0 auto;
   position: absolute;
   z-index: 99;
-  scrollbar-width: none;
-}
-
-.bookWrap::-webkit-scrollbar {
-  display: none;
 }
 
 .cover {
@@ -52,4 +47,8 @@
   padding: var(--book-spacing);
   height: 100%;
   overflow: scroll;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
 }

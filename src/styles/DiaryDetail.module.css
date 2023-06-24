@@ -45,3 +45,7 @@
   color: rgb(38, 59, 60);
   overflow: scroll;
 }
+
+.content::-webkit-scrollbar {
+  display: none;
+}

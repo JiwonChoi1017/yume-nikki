@@ -47,5 +47,5 @@
 }
 
 .closeLink {
-  margin-top: calc(var(--baseline) * 35);
+  margin-top: 50vh;
 }
