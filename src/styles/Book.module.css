@@ -3,11 +3,16 @@
   margin: 0 auto;
   position: absolute;
   z-index: 99;
+  scrollbar-width: none;
+}
+
+.bookWrap::-webkit-scrollbar {
+  display: none;
 }
 
 .cover {
-  width: calc(var(--baseline) * 105);
-  height: calc(var(--baseline) * 60);
+  width: 85vw;
+  height: 85vh;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
   background-color: var(--book-bg);
   border-radius: 25px;
