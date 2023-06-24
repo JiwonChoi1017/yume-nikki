@@ -21,6 +21,11 @@
   animation-delay: 1s;
 }
 
+.mainLoader::after,
+.mainLoader::before {
+  border-color: #fff !important;
+}
+
 @keyframes animloader {
   0% {
     transform: scale(0);
