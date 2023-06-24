@@ -40,10 +40,6 @@ const SignInForm = () => {
       password: passwordRef.current.value,
     });
     setErrorInfo(errorInfo);
-    // ログインに成功した場合、カレンダーへ移動
-    if (errorInfo && errorInfo.status === RESPONSE_STATUS.SUCCESS) {
-      router.push("/calendar");
-    }
   };
   // ユーザー登録ボタンクリックイベントハンドラ
   const onClickSignUpButtonHandler = (

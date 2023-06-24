@@ -34,7 +34,7 @@ const Book = ({ leftPage, rightPage, currentPage }: Props) => {
           </label>
         </div>
       </div>
-      <div className="width__10per" />
+      <div className="width__7per" />
     </div>
   );
 };
