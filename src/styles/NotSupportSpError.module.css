@@ -1,0 +1,24 @@
+.modal {
+  width: 85%;
+  height: 40%;
+  background-color: rgba(226, 240, 240, 0.828);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #fff;
+  border-radius: 25px;
+  z-index: 99;
+}
+
+.title {
+  color: rgb(38, 59, 60);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.detail {
+  color: rgb(38, 59, 60);
+  margin: 30px 0;
+}
